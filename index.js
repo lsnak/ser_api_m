@@ -29,7 +29,9 @@ app.get('/server/:guildId', async (req, res) => {
   try {
     await guild.members.fetch();
 
-    const onlineCount = guild.members.cache.filter(m => m.presence?.status === 'online').size;
+    const onlineCount = guild.members.cache.filter(m =>
+    ['online', 'idle', 'dnd'].includes(m.presence?.status)
+    ).size;
     const totalCount = guild.memberCount;
 
     res.json({
